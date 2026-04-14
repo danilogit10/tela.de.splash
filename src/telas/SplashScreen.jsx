@@ -10,7 +10,7 @@ export default function TelaInicial() {
 
       {/* Imagem */}
       <Image
-        source={{ uri: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6" }}
+        source={require ('../../assets/images/logo.jpg')  }
         style={styles.imagem}
       />
 
