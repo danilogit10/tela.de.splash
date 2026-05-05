@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 
-export default function TelaInicial() {
+export default function TelaInicial({navigation}) {
   return (
     <View style={styles.container}>
       
@@ -20,7 +20,7 @@ export default function TelaInicial() {
       </Text>
 
       {/* Botão */}
-      <TouchableOpacity style={styles.botao}>
+      <TouchableOpacity style={styles.botao} onPress = {() => navigation.navigate("Cadastro")}>
         <Text style={styles.textoBotao}>ACESSAR</Text>
       </TouchableOpacity>
 
