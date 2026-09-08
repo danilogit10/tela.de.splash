@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import splashScreen from "../telas/SplashScreen";
-import loginScreen from "../telas/loginScreen";
+import loginScreen from "../telas/LoginScreen";
 import RegisterScreen from "../telas/RegisterScreen";
 import TabNavigation from "./tabNavigation";
 
@@ -23,7 +23,7 @@ export default function StackNavigation(){
             />
 
             <Stack.Screen
-            name="Cadastro"
+            name="Acessar"
             component={RegisterScreen}
             options={{headerShown: false}}
             />

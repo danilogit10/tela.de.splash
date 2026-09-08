@@ -1,42 +1,123 @@
-import { Text, TextInput, View, TouchableOpacity, StyleSheet } from "react-native";
+import { useState } from "react";
+import {
+    Text,
+    TextInput,
+    View,
+    TouchableOpacity,
+    StyleSheet,
+    Alert
+} from "react-native";
+
+import api from "../services/api";
 
 export default function LoginScreen({ navigation }) {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    async function handleLogin() {
+
+        if (!email || !password) {
+            Alert.alert(
+                "Atenção",
+                "Preencha o e-mail e a senha."
+            );
+            return;
+        }
+
+        try {
+
+            const response = await api.post(
+                "/users/login",
+                {
+                    email: email,
+                    password: password
+                }
+            );
+
+            console.log("Login realizado!");
+            console.log("Token:", response.data.token);
+
+            Alert.alert(
+                "Sucesso",
+                "Login realizado com sucesso!"
+            );
+
+            navigation.navigate("Tabs");
+
+        } catch (error) {
+
+            console.log("Erro no login:", error);
+
+            Alert.alert(
+                "Erro",
+                error.response?.data?.message ||
+                "Não foi possível realizar o login."
+            );
+        }
+    }
+
     return (
-        <View style={styles.container}> 
-            <Text style={styles.title}>Entre na sua conta</Text>
+        <View style={styles.container}>
 
-            <Text style={styles.label}>E-mail</Text>
-            <TextInput 
-                style={styles.input} 
+            <Text style={styles.title}>
+                Entre na sua conta
+            </Text>
+
+            <Text style={styles.label}>
+                E-mail
+            </Text>
+
+            <TextInput
+                style={styles.input}
                 placeholder="Digite seu e-mail"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
             />
 
-            <Text style={styles.label}>Senha</Text>
-            <TextInput 
-                style={styles.input} 
+            <Text style={styles.label}>
+                Senha
+            </Text>
+
+            <TextInput
+                style={styles.input}
                 placeholder="Digite sua senha"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={true}
             />
 
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate("Acessar")}
+                onPress={handleLogin}
             >
-                <Text style={styles.buttonText}>Entrar</Text>
+                <Text style={styles.buttonText}>
+                    Entrar
+                </Text>
             </TouchableOpacity>
 
-            <Text style={{ marginTop: 20 }}>
+            <Text style={styles.registerText}>
                 Não possui uma conta?{" "}
-                <Text onPress={() => navigation.navigate("Register")}>
+
+                <Text
+                    style={styles.registerLink}
+                    onPress={() => navigation.navigate("Acessar")}
+                >
                     Cadastre-se
                 </Text>
+
             </Text>
+
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+
     container: {
-        flex: 1, 
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
         padding: 20
@@ -59,7 +140,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderRadius: 8,
-        marginTop: 8,
+        marginTop: 8
     },
 
     button: {
@@ -67,12 +148,22 @@ const styles = StyleSheet.create({
         backgroundColor: "#4A5D23",
         paddingVertical: 12,
         borderRadius: 10,
-        width: "60%",
+        width: "60%"
     },
 
     buttonText: {
         color: "#fff",
         fontWeight: "bold",
-        textAlign: "center",
+        textAlign: "center"
     },
-}); 
+
+    registerText: {
+        marginTop: 20
+    },
+
+    registerLink: {
+        color: "#4A5D23",
+        fontWeight: "bold"
+    }
+
+});

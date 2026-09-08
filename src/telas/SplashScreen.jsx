@@ -20,7 +20,7 @@ export default function TelaInicial({navigation}) {
       </Text>
 
       {/* Botão */}
-      <TouchableOpacity style={styles.botao} onPress = {() => navigation.navigate("Cadastro")}>
+      <TouchableOpacity style={styles.botao} onPress = {() => navigation.navigate("Acessar")}>
         <Text style={styles.textoBotao}>ACESSAR</Text>
       </TouchableOpacity>
 
